@@ -14,7 +14,7 @@ void main() async {
         GetPage(name: '/login', page: () => LoginScreen()),
         GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/register', page: () => RegisterScreen()),
-      ], // Change this to LoginScreen() if you want the login screen to be the first screen
+      ],
     ),
   );
 }

@@ -1,25 +1,22 @@
 import 'dart:convert';
+import 'dart:math';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:my_app/screen/home_screen.dart';
-import 'package:my_app/services/api_helper.dart';
+import 'package:my_app/services/api_helper.dart'; // Ensure this import exists
 
-class UserLogins {
+class LogoutController {
   final _apiHelper = APIHelper();
   final box = GetStorage();
 
-  Future<void> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> logout() async {
     try {
-      final res = await _apiHelper.loginUsers(
-        email: email,
-        password: password,
-      );
-      setToken(res.accessToken!);
-      print("usr: ${jsonEncode(res.accessToken)}");
-      Get.to(HomeScreen());
+      final getToken = box.read("access_token");
+      final messgae = await _apiHelper.logout(token: getToken);
+      box.remove("access_token");
+      Get.snackbar("Message", messgae);
+      Get.offAllNamed('/login');
     } catch (e) {
       if (e.toString().contains('401')) {
         Get.snackbar("Error", "Invalid credentials");

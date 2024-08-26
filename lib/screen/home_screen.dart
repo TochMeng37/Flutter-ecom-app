@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:get/get.dart';
 import 'package:my_app/controllers/home_controller.dart';
+import 'package:my_app/screen/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final controller = Get.put(HomeController());
