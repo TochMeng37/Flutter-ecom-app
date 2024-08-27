@@ -19,7 +19,7 @@ class UserLogins {
       );
       setToken(res.accessToken!);
       print("usr: ${jsonEncode(res.accessToken)}");
-      Get.to(HomeScreen());
+      Get.offAllNamed('/home');
     } catch (e) {
       if (e.toString().contains('401')) {
         Get.snackbar("Error", "Invalid credentials");

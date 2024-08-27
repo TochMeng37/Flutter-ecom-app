@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:my_app/model/product_model.dart';
 import 'package:my_app/model/user_models.dart';
 import 'package:my_app/model/user_response.dart';
 
@@ -114,6 +115,27 @@ class APIHelper {
         return "Logged out successfully";
       } else {
         throw Exception("Failed to login: ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("General error: $e");
+    }
+  }
+
+  Future<ProductResponse> getallProducts({required String token}) async {
+    try {
+      final response = await dio.get(
+        "http://10.0.2.2:8000/api/get-products",
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return ProductResponse.fromJson(response.data);
+      } else {
+        throw Exception("Failed to get products: ${response.statusCode}");
       }
     } catch (e) {
       throw Exception("General error: $e");

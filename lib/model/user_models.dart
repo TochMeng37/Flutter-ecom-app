@@ -2,7 +2,7 @@ class UserModel {
   int? id;
   String? name;
   String? email;
-  Null? emailVerifiedAt;
+  String? emailVerifiedAt;
   String? profileUrl;
   String? createdAt;
   String? updatedAt;
