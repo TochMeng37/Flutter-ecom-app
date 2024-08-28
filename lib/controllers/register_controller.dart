@@ -15,7 +15,6 @@ class RegisterController extends GetxController {
         email: email,
         password: password,
       );
-      print(response);
       Get.snackbar("Message", response);
     } catch (e) {
       Get.snackbar("Error", e.toString());

@@ -15,6 +15,7 @@ dependencies:
   dio: ^5.6.0
   get: ^4.6.6
   get_storage:
+  curved_navigation_bar: ^1.0.6
 
 dev_dependencies:
   flutter_test:

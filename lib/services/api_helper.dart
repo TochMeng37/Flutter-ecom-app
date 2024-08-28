@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:my_app/model/detail_model.dart';
+import 'package:my_app/model/order_model.dart';
 import 'package:my_app/model/product_model.dart';
 import 'package:my_app/model/user_models.dart';
 import 'package:my_app/model/user_response.dart';
@@ -20,7 +22,7 @@ class APIHelper {
 
     try {
       final response = await dio.post(
-        "http://10.0.2.2:8000/api/auth/register",
+        "http://192.168.100.39:8000/api/auth/register",
         data: formData,
         options: Options(
           headers: {
@@ -57,7 +59,7 @@ class APIHelper {
 
     try {
       final response = await dio.post(
-        "http://10.0.2.2:8000/api/auth/login",
+        "http://192.168.100.39:8000/api/auth/login",
         data: formData,
         options: Options(
           headers: {
@@ -82,7 +84,7 @@ class APIHelper {
   Future<UserModel> getUserAccount({required String token}) async {
     try {
       final response = await dio.get(
-        "http://10.0.2.2:8000/api/auth/me",
+        "http://192.168.100.39:8000/api/auth/me",
         options: Options(
           headers: {
             "Accept": "application/json",
@@ -103,7 +105,7 @@ class APIHelper {
   Future<String> logout({required String token}) async {
     try {
       final response = await dio.post(
-        "http://10.0.2.2:8000/api/auth/logout",
+        "http://192.168.100.39:8000/api/auth/logout",
         options: Options(
           headers: {
             'Accept': 'application/json',
@@ -124,7 +126,7 @@ class APIHelper {
   Future<ProductResponse> getallProducts({required String token}) async {
     try {
       final response = await dio.get(
-        "http://10.0.2.2:8000/api/get-products",
+        "http://192.168.100.39:8000/api/get-products",
         options: Options(
           headers: {
             'Accept': 'application/json',
@@ -136,6 +138,49 @@ class APIHelper {
         return ProductResponse.fromJson(response.data);
       } else {
         throw Exception("Failed to get products: ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("General error: $e");
+    }
+  }
+
+  Future<ShowBuyID> showOne(
+      {required String token, required String productID}) async {
+    try {
+      final response = await dio.get(
+        "http://192.168.100.39:8000/api/show/$productID",
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return ShowBuyID.fromJson(response.data);
+      } else {
+        throw Exception("Failed to get by one: ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("General error: $e");
+    }
+  }
+
+  Future<DataResBuy> getBuy({required String token}) async {
+    try {
+      final response = await dio.get(
+        "http://192.168.100.39:8000/api/getBuyAll",
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return DataResBuy.fromJson(response.data);
+      } else {
+        throw Exception("Failed to get by one: ${response.statusCode}");
       }
     } catch (e) {
       throw Exception("General error: $e");

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:my_app/model/user_models.dart';
@@ -12,22 +10,21 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
     getAccountUsers();
+    super.onInit();
   }
 
   void getAccountUsers() async {
     try {
       final tokens = box.read("access_token");
-      print(tokens);
       final response = await _apiHelper.getUserAccount(token: tokens);
       users = response;
       update();
-      print("user: ${jsonEncode(response)}");
     } catch (e) {
       if (e.toString().contains('401')) {
         Get.snackbar("Error", "Invalid credentials. Please log in again.");
       }
+      update();
     }
   }
 
